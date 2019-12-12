@@ -13,10 +13,15 @@ import java.io.IOException;
 @EnableBinding(Sink.class)
 public class InvalidDataWriterService{
 
-    @Autowired
+    private final
     InvalidDataRepository repository;
 
-    ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+    private ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+
+    @Autowired
+    public InvalidDataWriterService(InvalidDataRepository repository) {
+        this.repository = repository;
+    }
 
     @StreamListener(Sink.INPUT)
     public void invalidDataWrite(String carJson) throws IOException {
